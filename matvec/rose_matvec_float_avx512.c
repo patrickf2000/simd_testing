@@ -109,8 +109,11 @@ int main(int argc,char **argv)
   matvec_simd(matrix,vector,dest_vector);
   double t = 0;
   double start = read_timer();
-  for (int i = 0; i < 20; i++) 
+  for (int i = 0; i < 20; i++) {
+    printf("%d ", i);
     matvec_simd(matrix,vector,dest_vector);
+  }
+  puts("");
   t += read_timer() - start;
   double t_serial = 0;
   double start_serial = read_timer();

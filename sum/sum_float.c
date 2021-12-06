@@ -67,8 +67,11 @@ int main(int argc, char **argv) {
     
     double t = 0;
     double start = read_timer();
-    for (int i = 0; i<N_RUNS; i++)
+    for (int i = 0; i<N_RUNS; i++) {
+        printf("%d ", i);
         result = sum(X);
+    }
+    puts("");
     t += (read_timer() - start);
     
     double t_serial = 0;

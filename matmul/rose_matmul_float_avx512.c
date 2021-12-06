@@ -137,8 +137,11 @@ int main(int argc,char *argv[])
   matmul_serial(A,BT,C_serial);
   double elapsed = 0;
   double elapsed1 = read_timer();
-  for (i = 0; i < num_runs; i++) 
+  for (i = 0; i < num_runs; i++) {
+     printf("%d ", i);
     matmul_simd(A,BT,C_simd);
+  }
+  puts("");
   elapsed += read_timer() - elapsed1;
   double elapsed_serial = 0;
   double elapsed_serial1 = read_timer();
