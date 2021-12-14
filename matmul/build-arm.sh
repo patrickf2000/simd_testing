@@ -2,6 +2,7 @@
 armclang -mcpu=a64fx -armpl -fopenmp -O2 -lm -march=armv8-a+sve matmul_float.c -o matmul1
 armclang -mcpu=a64fx -armpl -fopenmp -O2 -lm -march=armv8-a+sve matmul_float.c -o matmul2 -ffp-model=fast
 armclang -mcpu=a64fx -armpl -fopenmp -O2 -lm -march=armv8-a+sve rose_matmul_float_sve.c -o matmul_rex
+armclang -mcpu=a64fx -armpl -fopenmp -O2 -lm -march=armv8-a+sve rose_matmul_float_sve2.c -o matmul_rex2
 
 echo "DONE. NOW RUNNING"
 echo ""
