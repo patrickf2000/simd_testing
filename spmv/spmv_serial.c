@@ -17,15 +17,15 @@ double read_timer() {
 //#define DEFAULT_DIMSIZE 256
 
 void print_array(char *title, char *name, REAL *A, int n, int m) {
-    printf("%s:\n", title);
+    fprintf(stderr, "%s:\n", title);
     int i, j;
     for (i = 0; i < n; i++) {
         for (j = 0; j < m; j++) {
-            printf("%s[%d][%d]:%f  ", name, i, j, A[i * m + j]);
+            fprintf(stderr, "%s[%d][%d]:%f  ", name, i, j, A[i * m + j]);
         }
-        printf("\n");
+        fprintf(stderr, "\n");
     }
-    printf("\n");
+    fprintf(stderr, "\n");
 }
 
 /*  subroutine error_check (n,m,alpha,dx,dy,u,f)
@@ -75,7 +75,6 @@ int main(int argc, char *argv[]) {
     
     for (row=0; row<nrows; row++) {
 		REAL sum = 0.0;
-		#pragma omp simd reduction(+:sum)
 		for (idx=ia[row]; idx<ia[row+1]; idx++) {
 			sum += a[idx] * x[ja[idx]];
 		}
@@ -83,7 +82,7 @@ int main(int argc, char *argv[]) {
     }
     elapsed = read_timer() - elapsed;
         
-    printf("seq elasped time(s): %.4f\n", elapsed);
+    //printf("seq elasped time(s): %.4f\n", elapsed);
   
     int errors = 0;
     for (row=0; row<nrows; row++) {
@@ -92,7 +91,9 @@ int main(int argc, char *argv[]) {
 			++errors;
 		}
     }
-    printf("Errors: %d\n", errors);
+    //printf("Errors: %d\n", errors);
+    
+    printf("%.4f,%d\n", elapsed, errors);
     
     free(ia); free(ja); free(a); free(x); free(y);
     return 0;
