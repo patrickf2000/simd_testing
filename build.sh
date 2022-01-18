@@ -17,6 +17,7 @@ if [[ $1 == "intel" ]] ; then
         CURRENT=`basename $d`
         echo $CURRENT
         mkdir -p build/$CURRENT
+        touch build/$CURRENT/rex_kmp.h
         (cd "$d" &&
             clang -fopenmp -O2 -lm -march=native "$CURRENT"_float.c -o ../build/$CURRENT/$CURRENT"1" &&
             clang -fopenmp -O2 -lm -march=knl "$CURRENT"_float.c -o ../build/$CURRENT/$CURRENT"2" &&

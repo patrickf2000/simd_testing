@@ -1,4 +1,4 @@
-//#include "rex_kmp.h" 
+#include "rex_kmp.h" 
 ////Example of sparse matrix-vector multiply, using CSR (compressed sparse row format).
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,16 +18,16 @@ double read_timer()
 
 void print_array(char *title,char *name,float *A,int n,int m)
 {
-  printf("%s:\n",title);
+  fprintf(stderr,"%s:\n",title);
   int i;
   int j;
   for (i = 0; i < n; i++) {
     for (j = 0; j < m; j++) {
-      printf("%s[%d][%d]:%f  ",name,i,j,A[i * m + j]);
+      fprintf(stderr,"%s[%d][%d]:%f  ",name,i,j,A[i * m + j]);
     }
-    printf("\n");
+    fprintf(stderr,"\n");
   }
-  printf("\n");
+  fprintf(stderr,"\n");
 }
 /*  subroutine error_check (n,m,alpha,dx,dy,u,f)
  implicit none
@@ -129,7 +129,7 @@ int main(int argc,char *argv[])
     y[row] = sum;
   }
   elapsed = read_timer() - elapsed;
-  printf("seq elasped time(s): %.4f\n",elapsed);
+//printf("seq elasped time(s): %.4f\n", elapsed);
   int errors = 0;
   for (row = 0; row < nrows; row++) {
     if (y[row] < 0) {
@@ -137,7 +137,8 @@ int main(int argc,char *argv[])
       ++errors;
     }
   }
-  printf("Errors: %d\n",errors);
+//printf("Errors: %d\n", errors);
+  printf("%.4f,%d\n",elapsed,errors);
   free(ia);
   free(ja);
   free(a);

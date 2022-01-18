@@ -57,15 +57,6 @@ float sum_serial(float *X)
   return result;
 }
 
-void print_vector(float *vector)
-{
-  printf("[");
-  for (int i = 0; i < 8; i++) {
-    printf("%.2f ",vector[i]);
-  }
-  puts("]");
-}
-
 int main(int argc,char **argv)
 {
   int status = 0;
@@ -81,29 +72,25 @@ int main(int argc,char **argv)
   double t = 0;
   double start = read_timer();
   for (int i = 0; i < 20; i++) {
-    printf("%d ", i);
+    fprintf(stderr,"%d ",i);
     result = sum(X);
   }
-  puts("");
+  fprintf(stderr,"\n");
   t += read_timer() - start;
   double t_serial = 0;
   double start_serial = read_timer();
   for (int i = 0; i < 20; i++) 
     result_serial = sum_serial(X);
   t_serial += read_timer() - start_serial;
-  print_vector(X);
-  puts("=\n");
-  printf("SIMD: %f\n",result);
-  puts("---------------------------------");
-  printf("Serial: %f\n",result_serial);
   double gflops = 2.0 * 10240000 * 10240000 * 20 / (1.0e9 * t);
   double gflops_serial = 2.0 * 10240000 * 10240000 * 20 / (1.0e9 * t_serial);
-  printf("==================================================================\n");
-  printf("Performance:\t\t\tRuntime (s)\t GFLOPS\n");
-  printf("------------------------------------------------------------------\n");
-  printf("Sum (SIMD):\t\t%4f\t%4f\n",t / 20,gflops);
-  printf("Sum (Serial):\t\t%4f\t%4f\n",t_serial / 20,gflops_serial);
-  printf("Correctness check: %f\n",(result_serial - result));
+/*printf("==================================================================\n");
+    printf("Performance:\t\t\tRuntime (s)\t GFLOPS\n");
+    printf("------------------------------------------------------------------\n");
+    printf("Sum (SIMD):\t\t%4f\t%4f\n", t/N_RUNS, gflops);
+    printf("Sum (Serial):\t\t%4f\t%4f\n", t_serial/N_RUNS, gflops_serial);
+    printf("Correctness check: %f\n", result_serial - result);*/
+  printf("%4f,%f\n",t / 20,(result_serial - result));
   free(X);
   return 0;
 }
