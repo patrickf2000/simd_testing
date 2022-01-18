@@ -6,6 +6,10 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
+if [ -d ./build ] ; then
+    rm -rf ./build
+fi
+
 # If we have intel, go through each folder and call the Intel build scripts
 if [[ $1 == "intel" ]] ; then
     for d in ./*/
