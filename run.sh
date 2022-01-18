@@ -6,34 +6,26 @@
 #
 # Param 1- the program being run
 function run_intel() {
-    #printf "$1," 1>> intel_explicit.csv
-    #./$1/$1"1" 1>> intel_explicit.csv
-    
-    #printf "$1," 1>> intel_knl.csv
-    #./$1/$1"2" 1>> intel_knl.csv
-    
-    #printf "$1," 1>> intel_rex.csv
-    #./$1/$1"_rex" 1>> intel_rex.csv
-    
     CSV=$1".csv"
     echo "OpenMP (AVX-2),,OpenMP (AVX-512),,Rex," 1>> $CSV
-    ./$1/$1"1" | tr -d '\n' 1>> $CSV
-    printf "," 1>> $CSV
     
-    ./$1/$1"2" | tr -d '\n' 1>> $CSV
-    printf "," 1>> $CSV
-    
-    ./$1/$1"_rex" | tr -d '\n' 1>> $CSV
-    echo "" 1>> $CSV
+    for i in {1..10}
+    do
+        ./$1/$1"1" | tr -d '\n' 1>> $CSV
+        printf "," 1>> $CSV
+        
+        ./$1/$1"2" | tr -d '\n' 1>> $CSV
+        printf "," 1>> $CSV
+        
+        ./$1/$1"_rex" | tr -d '\n' 1>> $CSV
+        echo "" 1>> $CSV
+    done
+    echo "=AVERAGE(A2:A11),,=AVERAGE(C2:C11),,=AVERAGE(E2:E11)" 1>> $CSV
 }
 
 # Run
 cd build
 rm ./*.csv
-
-#echo "Program,Time (s),Correctness" >> intel_explicit.csv
-#echo "Program,Time (s),Correctness" >> intel_knl.csv
-#echo "Program,Time (s),Correctness" >> intel_rex.csv
 
 for d in ./*/
 do
