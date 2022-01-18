@@ -23,7 +23,7 @@ function run_intel() {
         ./$1/$1"_rex" | tr -d '\n' 1>> $CSV
         echo "" 1>> $CSV
     done
-    echo "=AVERAGE(A2:A11),,=AVERAGE(C2:C11),,=AVERAGE(E2:E11)" 1>> $CSV
+    echo "=AVERAGE(A2:A11),,=AVERAGE(C2:C11),,=AVERAGE(E2:E11),,=AVERAGE(G2:G11)" 1>> $CSV
 }
 
 # Run
