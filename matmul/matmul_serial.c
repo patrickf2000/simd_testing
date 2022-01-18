@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
     double elapsed1 = read_timer();
     for (i=0; i<num_runs; i++) {
         fprintf(stderr, "%d ", i);
-        matmul(A, BT, C_serial);
+        matmul_serial(A, BT, C_serial);
     }
     fprintf(stderr, "\n");
     elapsed += (read_timer() - elapsed1);

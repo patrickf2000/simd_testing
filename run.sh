@@ -7,10 +7,13 @@
 # Param 1- the program being run
 function run_intel() {
     CSV=$1".csv"
-    echo "OpenMP (AVX-2),,OpenMP (AVX-512),,Rex," 1>> $CSV
+    echo "Serial,,OpenMP (AVX-2),,OpenMP (AVX-512),,Rex," 1>> $CSV
     
     for i in {1..10}
     do
+        ./$1/$1"_serial" | tr -d '\n' 1>> $CSV
+        printf "," 1>> $CSV
+        
         ./$1/$1"1" | tr -d '\n' 1>> $CSV
         printf "," 1>> $CSV
         
