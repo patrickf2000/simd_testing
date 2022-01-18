@@ -18,9 +18,9 @@ if [[ $1 == "intel" ]] ; then
         echo $CURRENT
         mkdir -p build/$CURRENT
         (cd "$d" &&
-            clang -fopenmp -O2 -lm -march=native "$CURRENT"_float.c -o $CURRENT/$CURRENT"1" &&
-            clang -fopenmp -O2 -lm -march=knl "$CURRENT"_float.c -o $CURRENT/$CURRENT"2" &&
-            clang -fopenmp -O2 -lm -march=native rose_"$CURRENT"_float_avx512.c -o $CURRENT/$CURRENT"_rex"
+            clang -fopenmp -O2 -lm -march=native "$CURRENT"_float.c -o ../build/$CURRENT/$CURRENT"1" &&
+            clang -fopenmp -O2 -lm -march=knl "$CURRENT"_float.c -o ../build/$CURRENT/$CURRENT"2" &&
+            clang -fopenmp -O2 -lm -march=native rose_"$CURRENT"_float_avx512.c -o ../build/$CURRENT/$CURRENT"_rex"
         )
     done
 
