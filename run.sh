@@ -6,23 +6,23 @@
 #
 # Param 1- the program being run
 function run_intel() {
+    printf "$1," 1>> intel_explicit.csv
     ./$1/$1"1" 1>> intel_explicit.csv
-    #echo "," 1>> intel_explicit.csv
     
+    printf "$1," 1>> intel_knl.csv
     ./$1/$1"2" 1>> intel_knl.csv
-    #echo "," 1>> intel_knl.csv
     
+    printf "$1," 1>> intel_rex.csv
     ./$1/$1"_rex" 1>> intel_rex.csv
-    #echo "," 1>> intel_rex.csv
 }
 
 # Run
 cd build
 rm ./*.csv
 
-echo "Time (s),Correctness" >> intel_explicit.csv
-echo "Time (s),Correctness" >> intel_knl.csv
-echo "Time (s),Correctness" >> intel_rex.csv
+echo "Program,Time (s),Correctness" >> intel_explicit.csv
+echo "Program,Time (s),Correctness" >> intel_knl.csv
+echo "Program,Time (s),Correctness" >> intel_rex.csv
 
 for d in ./*/
 do
