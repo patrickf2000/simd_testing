@@ -57,11 +57,6 @@ int main(int argc, char **argv) {
     init(X, Y);
     for (int i = 0; i<N; i++) Y_serial[i] = Y[i];
     
-    print_vector(Y);
-    print_vector(X);
-    printf("%.2f\n", a);
-    puts("=\n");
-    
     //warming up
     axpy(X, Y, a);
     axpy_serial(X, Y_serial, a);
