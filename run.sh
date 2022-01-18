@@ -19,6 +19,8 @@ function run_intel() {
 # Run
 cd build
 
+rm *.csv
+
 for d in ./*/
 do
     CURRENT=`basename $d`
@@ -27,4 +29,8 @@ do
 done
 
 cd ..
+
+mkdir output
+cp build/*.csv ./output
+
 echo "Done"

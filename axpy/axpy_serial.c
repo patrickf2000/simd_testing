@@ -38,6 +38,14 @@ void axpy_serial(float *X, float *Y, float a) {
     }
 }
 
+void print_vector(float *vector) {
+    printf("[");
+    for (int i = 0; i<8; i++) {
+        printf("%.2f ", vector[i]);
+    }
+    puts("]");
+}
+
 float check(float *A, float *B){
     float difference = 0;
     for(int i = 0;i<N; i++){
@@ -83,16 +91,19 @@ int main(int argc, char **argv) {
         axpy_serial(X, Y_serial, a);
     t_serial += (read_timer() - start_serial);
     
+    print_vector(Y);
+    puts("---------------------------------");
+    print_vector(Y_serial);
+    
     double gflops = ((2.0 * N) * N * N_RUNS) / (1.0e9 * t);
     double gflops_serial = ((2.0 * N) * N * N_RUNS) / (1.0e9 * t_serial);
     
-    /*printf("==================================================================\n");
+    printf("==================================================================\n");
     printf("Performance:\t\t\tRuntime (s)\t GFLOPS\n");
     printf("------------------------------------------------------------------\n");
     printf("AXPY (SIMD):\t\t%4f\t%4f\n", t/N_RUNS, gflops);
     printf("AXPY (Serial):\t\t%4f\t%4f\n", t_serial/N_RUNS, gflops_serial);
-    printf("Correctness check: %f\n", check(Y,Y_serial));*/
-    printf("%4f,%f\n", t/N_RUNS, check(Y,Y_serial));
+    printf("Correctness check: %f\n", check(Y,Y_serial));
     
     free(X);
     free(Y);

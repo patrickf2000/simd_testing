@@ -48,6 +48,25 @@ void matvec_serial(float *matrix, float *vector, float *dest) {
     }
 }
 
+void print_matrix(float *matrix) {
+    for (int i = 0; i<8; i++) {
+        printf("[");
+        for (int j = 0; j<8; j++) {
+            printf("%.2f ", matrix[i*N+j]);
+        }
+        puts("]");
+    }
+    puts("");
+}
+
+void print_vector(float *vector) {
+    printf("[");
+    for (int i = 0; i<8; i++) {
+        printf("%.2f ", vector[i]);
+    }
+    puts("]");
+}
+
 float check(float *A, float *B){
     float difference = 0;
     for(int i = 0;i<N; i++){
@@ -73,10 +92,10 @@ int main(int argc, char **argv) {
     double t = 0;
     double start = read_timer();
     for (int i = 0; i<N_RUNS; i++) {
-        fprintf(stderr, "%d ", i);
+        printf("%d ", i);
         matvec_simd(matrix, vector, dest_vector);
     }
-    fprintf(stderr, "\n");
+    printf("\n");
     t += (read_timer() - start);
     
     double t_serial = 0;
@@ -85,16 +104,22 @@ int main(int argc, char **argv) {
         matvec_serial(matrix, vector, serial_vector);
     t_serial += (read_timer() - start_serial);
     
+    print_matrix(matrix);
+    print_vector(vector);
+    puts("=\n");
+    print_vector(dest_vector);
+    puts("---------------------------------");
+    print_vector(serial_vector);
+    
     double gflops = ((2.0 * N) * N * N_RUNS) / (1.0e9 * t);
     double gflops_serial = ((2.0 * N) * N * N_RUNS) / (1.0e9 * t_serial);
     
-    /*printf("==================================================================\n");
+    printf("==================================================================\n");
     printf("Performance:\t\t\tRuntime (s)\t GFLOPS\n");
     printf("------------------------------------------------------------------\n");
     printf("Matrix-vector (SIMD):\t\t%4f\t%4f\n", t/N_RUNS, gflops);
     printf("Matrix-vector (Serial):\t\t%4f\t%4f\n", t_serial/N_RUNS, gflops_serial);
-    printf("Correctness check: %f\n", check(dest_vector,serial_vector));*/
-    printf("%4f,%f\n", t/N_RUNS, check(dest_vector,serial_vector));
+    printf("Correctness check: %f\n", check(dest_vector,serial_vector));
     
     free(dest_vector);
     free(serial_vector);

@@ -45,6 +45,14 @@ float sum_serial(float *X) {
     return result;
 }
 
+void print_vector(float *vector) {
+    printf("[");
+    for (int i = 0; i<8; i++) {
+        printf("%.2f ", vector[i]);
+    }
+    puts("]");
+}
+
 int main(int argc, char **argv) {
     //Set everything up
     float *X = malloc(sizeof(float)*N);
@@ -60,10 +68,10 @@ int main(int argc, char **argv) {
     double t = 0;
     double start = read_timer();
     for (int i = 0; i<N_RUNS; i++) {
-        fprintf(stderr, "%d ", i);
+        printf("%d ", i);
         result = sum(X);
     }
-    fprintf(stderr, "\n");
+    puts("");
     t += (read_timer() - start);
     
     double t_serial = 0;
@@ -72,16 +80,21 @@ int main(int argc, char **argv) {
         result_serial = sum_serial(X);
     t_serial += (read_timer() - start_serial);
     
+    print_vector(X);
+    puts("=\n");
+    printf("SIMD: %f\n", result);
+    puts("---------------------------------");
+    printf("Serial: %f\n", result_serial);
+    
     double gflops = ((2.0 * N) * N * N_RUNS) / (1.0e9 * t);
     double gflops_serial = ((2.0 * N) * N * N_RUNS) / (1.0e9 * t_serial);
     
-    /*printf("==================================================================\n");
+    printf("==================================================================\n");
     printf("Performance:\t\t\tRuntime (s)\t GFLOPS\n");
     printf("------------------------------------------------------------------\n");
     printf("Sum (SIMD):\t\t%4f\t%4f\n", t/N_RUNS, gflops);
     printf("Sum (Serial):\t\t%4f\t%4f\n", t_serial/N_RUNS, gflops_serial);
-    printf("Correctness check: %f\n", result_serial - result);*/
-    printf("%4f,%f\n", t/N_RUNS, result_serial - result);
+    printf("Correctness check: %f\n", result_serial - result);
     
     free(X);
     
