@@ -26,8 +26,10 @@ echo "Time (s),Correctness" >> intel_rex.csv
 for d in ./*/
 do
     CURRENT=`basename $d`
-    echo $CURRENT
-    run_intel $CURRENT
+    if [ $CURRENT != "output" ] ; then
+        echo $CURRENT
+        run_intel $CURRENT
+    fi
 done
 
 cd ..

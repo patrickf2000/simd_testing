@@ -78,10 +78,10 @@ int main(int argc,char **argv)
   double t = 0;
   double start = read_timer();
   for (int i = 0; i < 20; i++) {
-    printf("%d ",i);
+    fprintf(stderr,"%d ",i);
     axpy(X,Y,a);
   }
-  printf("\n");
+  fprintf(stderr,"\n");
   t += read_timer() - start;
   double t_serial = 0;
   double start_serial = read_timer();
