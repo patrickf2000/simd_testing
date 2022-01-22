@@ -12,7 +12,7 @@ function run_intel() {
     LAST=$(($2 + 1))
     echo "Serial,,OpenMP (AVX-2),,OpenMP (AVX-512),,Rex," 1>> $CSV
     
-    for i in {1..$2}
+    for i in 1 .. $2
     do
         ./$1/$1"_serial" | tr -d '\n' 1>> $CSV
         printf "," 1>> $CSV
