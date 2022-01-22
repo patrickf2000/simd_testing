@@ -83,8 +83,10 @@ done
 
 cd ..
 
-mkdir output
-rm output/*
+if [[ ! -d ./output ]]; then
+    mkdir output
+fi
+
 cp build/*.csv ./output
 
 echo "Done"
