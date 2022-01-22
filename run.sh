@@ -34,8 +34,8 @@ function run_arm() {
     CSV=$1"_arm.csv"
     LAST=$(($2 + 1))
     echo "Serial,,OpenMP (SVE2),,OpenMP (SVE2 with faddv),,Rex," 1>> $CSV
-    
-    for i in 1 .. $2
+
+    for i in $(seq 1 $2)
     do
         ./$1/$1"_serial" | tr -d '\n' 1>> $CSV
         printf "," 1>> $CSV
