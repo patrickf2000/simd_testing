@@ -55,19 +55,6 @@ void matmul_simd(float **A,float **B,float **C)
     }
   }
 }
-// Debug functions
-
-void print_matrix(float **matrix)
-{
-  for (int i = 0; i < 8; i++) {
-    printf("[");
-    for (int j = 0; j < 8; j++) {
-      printf("%.2f ",matrix[i][j]);
-    }
-    puts("]");
-  }
-  puts("");
-}
 
 void matmul_serial(float **A,float **B,float **C)
 {
@@ -130,31 +117,26 @@ int main(int argc,char *argv[])
   double elapsed = 0;
   double elapsed1 = read_timer();
   for (i = 0; i < num_runs; i++) {
-    printf("%d ", i);
+    fprintf(stderr,"%d ",i);
     matmul_simd(A,BT,C_simd);
   }
-  printf("\n");
+  fprintf(stderr,"\n");
   elapsed += read_timer() - elapsed1;
   double elapsed_serial = 0;
   double elapsed_serial1 = read_timer();
   for (i = 0; i < num_runs; i++) 
     matmul_serial(A,BT,C_serial);
   elapsed_serial += read_timer() - elapsed_serial1;
-  print_matrix(A);
-  print_matrix(BT);
-  puts("=\n");
-  print_matrix(C_simd);
-  puts("---------------------------------");
-  print_matrix(C_serial);
   double gflops_omp = 2.0 * 1024 * 1024 * 1024 * num_runs / (1.0e9 * elapsed);
   double gflops_serial = 2.0 * 1024 * 1024 * 1024 * num_runs / (1.0e9 * elapsed_serial);
-  printf("======================================================================================================\n");
-  printf("\tMatrix Multiplication: A[N][N] * B[N][N] = C[N][N], N=%d\n",1024);
-  printf("------------------------------------------------------------------------------------------------------\n");
-  printf("Performance:\t\tRuntime (s)\t GFLOPS\n");
-  printf("------------------------------------------------------------------------------------------------------\n");
-  printf("matmul_omp:\t\t%4f\t%4f\n",elapsed / num_runs,gflops_omp);
-  printf("matmul_serial:\t\t%4f\t%4f\n",elapsed_serial / num_runs,gflops_serial);
-  printf("Correctness check: %f\n",(check(C_simd,C_serial)));
+/*printf("======================================================================================================\n");
+    printf("\tMatrix Multiplication: A[N][N] * B[N][N] = C[N][N], N=%d\n", N);
+    printf("------------------------------------------------------------------------------------------------------\n");
+    printf("Performance:\t\tRuntime (s)\t GFLOPS\n");
+    printf("------------------------------------------------------------------------------------------------------\n");
+    printf("matmul_omp:\t\t%4f\t%4f\n", elapsed/num_runs, gflops_omp);
+    printf("matmul_serial:\t\t%4f\t%4f\n", elapsed_serial/num_runs, gflops_serial);
+    printf("Correctness check: %f\n", check(C_simd,C_serial));*/
+  printf("%4f,%f\n",elapsed / num_runs,(check(C_simd,C_serial)));
   return 0;
 }

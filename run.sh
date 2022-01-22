@@ -31,10 +31,25 @@ function run_intel() {
 
 # Arm function; this is the same as the Intel
 function run_arm() {
-    echo "ARM: $1 | Running: $2"
+    CSV=$1"_arm.csv"
     LAST=$(($2 + 1))
+    echo "Serial,,OpenMP (SVE2),,OpenMP (SVE2 with faddv),,Rex," 1>> $CSV
     
-    echo "=AVERAGE(A2:A$LAST),,=AVERAGE(C2:C$LAST),,=AVERAGE(E2:E$LAST),,=AVERAGE(G2:G$LAST),"
+    for i in 1 .. $2
+    do
+        ./$1/$1"_serial" | tr -d '\n' 1>> $CSV
+        printf "," 1>> $CSV
+        
+        ./$1/$1"1" | tr -d '\n' 1>> $CSV
+        printf "," 1>> $CSV
+        
+        ./$1/$1"2" | tr -d '\n' 1>> $CSV
+        printf "," 1>> $CSV
+        
+        ./$1/$1"_rex" | tr -d '\n' 1>> $CSV
+        echo "" 1>> $CSV
+    done
+    echo "=AVERAGE(A2:A$LAST),,=AVERAGE(C2:C$LAST),,=AVERAGE(E2:E$LAST),,=AVERAGE(G2:G$LAST)," 1>> $CSV
 }
 
 # Make sure we have a command line argument
